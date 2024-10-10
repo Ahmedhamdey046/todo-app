@@ -7,7 +7,7 @@
 @section('main-section')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center my-5">
-<!—flex-direction view with Margin 5-->
+        <!—flex-direction view with Margin 5-->
         <div class="h2">All Todos</div>
         <a href="{{route("todo.create")}}" class="btn btn-primary btn-lg">Add Todo</a>
     </div>
@@ -26,7 +26,13 @@
                 <td>{{$todo->duedate}}</td>
                 <td>
                     <a href="{{route("todo.edit",$todo->id)}}" class="btn btn-success btn-sm">Update</a>
-                    <a href="{{route("todo.delete",$todo->id)}}" class="btn btn-danger btn-sm">Delete</a>
+                    <form method="post" action="{{route("todo.destroy",$todo->id)}}" style="display:inline">
+                        @csrf
+                        @method("delete")
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    {{-- <a href="{{route("todo.destroy",$todo->id)}}" class="btn btn-danger btn-sm">Delete</a> --}}
+
                 </td>
             </tr>
         @endforeach

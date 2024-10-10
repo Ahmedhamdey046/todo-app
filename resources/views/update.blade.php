@@ -7,12 +7,13 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center my-5"> <!-- Margin 5-->
         <div class="h2">Update Todo</div>
-        <a href="{{route("todo.home")}}" class="btn btn-primary btn-lg">Back</a>
+        <a href="{{route("todo.index")}}" class="btn btn-primary btn-lg">Back</a>
     </div>
     <div class="card">
         <div class="card-body">
-            <form action="{{route("todo.updateData")}}" method="post">
+            <form action="{{route("todo.update",$todo->id)}}" method="post">
                 @csrf
+                @method('put')
                 <label for="" class="form-label mt-4">Task Name</label><!-- mt-4 = margin 4 -->
                 <input type="text" name="name" class = "form-control" id="" value="{{$todo->name}}">
                 <label for="" class="form-label mt-4">Description</label>

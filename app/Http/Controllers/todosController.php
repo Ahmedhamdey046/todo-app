@@ -13,6 +13,10 @@ class todosController extends Controller
         return view("welcome")->with($data);
     }
 
+    public function create(){
+        return view ("create");
+    }
+
     public function store(Request $request){
         $request->validate(
             [
@@ -26,35 +30,35 @@ class todosController extends Controller
             $todo->work=$request['work'];
             $todo->duedate=$request['duedate'];
             $todo->save();
-            return redirect(route("todo.home"));
+            return redirect(route("todo.index"));
         }
-
-    public function delete($id){
-        todos::find($id)->delete();
-        return redirect(route("todo.home"));
-    }
-
-    public function edit($id){
-        $todo=todos::find($id);
-        $data=compact('todo');
-        return view("update")->with($data);
-    }
-
-    public function updateData(Request $request){
-        $request->validate(
-            [
-                'name'=>'required',
-                'work'=>'required',
-                'duedate'=>'required'
-            ]
-            );
-            $id = $request['id'];
+        
+        public function edit($id){
             $todo=todos::find($id);
-
-            $todo->name=$request['name'];
-            $todo->work=$request['work'];
-            $todo->duedate=$request['duedate'];
-            $todo->save();
-            return redirect(route("todo.home"));
-    }
+            $data=compact('todo');
+            return view("update")->with($data);
+        }
+        
+        public function update(Request $request){
+            $request->validate(
+                [
+                    'name'=>'required',
+                    'work'=>'required',
+                    'duedate'=>'required'
+                    ]
+                );
+                $id = $request['id'];
+                $todo=todos::find($id);
+                
+                $todo->name=$request['name'];
+                $todo->work=$request['work'];
+                $todo->duedate=$request['duedate'];
+                $todo->save();
+                return redirect(route("todo.index"));
+            }
+            
+            public function destroy($id){
+                todos::find($id)->delete();
+                return redirect(route("todo.index"));
+            }
 }
